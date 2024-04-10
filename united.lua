@@ -102,6 +102,8 @@ function united.new(object, ...)
 
     self._object = object
     self._currentStates = {}
+    self._stateTypes = { ... }
+    self._defaultStateType = self._stateTypes[1]
     self._stateData = {}
     self._stateToType = {}
     self._stateStack = {}
@@ -156,17 +158,23 @@ function united:configure(configuration)
     return self
 end
 
-function united:setCallback(stateType, f)
-    self._callbacks[stateType] = f
+function united:setCallback(f, stateType)
+    if not stateType then
+        for k, _ in pairs(self._stateTypes) do
+            self._callbacks[k] = f
+        end
+    else
+        self._callbacks[stateType] = f
+    end
     return self
 end
 
 function united:get(stateType)
-    return self._currentStates[stateType]
+    return self._currentStates[stateType or self._defaultStateType]
 end
 
 function united:key(stateType)
-    return self._names[self._currentStates[stateType]]
+    return self._names[self._currentStates[stateType or self._defaultStateType]]
 end
 
 function united:is(state)
