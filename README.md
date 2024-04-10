@@ -44,10 +44,10 @@ We can configure the state manager using `sm:configure(configuration)`.
 ```lua
 self.sm:configure({
     -- You can only go to the Idle state when on the ground
-    [action.Idle] = {[position.Ground] = true} 
+    [action.Idle] = {[position.Ground] = true},
 
     -- You cannot go into the Run state while in the Jump state.
-    [action.Run] = {[action.Jump] = false} 
+    [action.Run] = {[action.Jump] = false}
 })
 ```
 
